@@ -121,6 +121,10 @@ public class GoTo {
             return goArround(map, player, destination);
 
         }
+        else if (futureTile.isShop()) {
+            return goArround(map, player, destination);
+
+        }
         else if (futureTile.isResource()) {
             return goArround(map, player, destination);
 
