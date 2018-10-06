@@ -25,6 +25,7 @@ public class Bot extends BaseBot {
         System.out.println("Tile: " + VectorPoint.toString(tile.getPosition()) + " player: " + VectorPoint.toString(player.getPosition()) + " : " + VectorPoint.toString(move));
 
 
-        return createMoveAction(move);
+        //return createMoveAction(move);
+        return createCollectAction(Point.RIGHT);
     }
 }
