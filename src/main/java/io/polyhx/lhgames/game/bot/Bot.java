@@ -17,7 +17,7 @@ public class Bot extends BaseBot {
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
         MoveAction mouvement = null;
 
-        while(x!=0){
+        if (x!=0){
             mouvement = new MoveAction(Point.LEFT);
             x = x - 1;
         }
