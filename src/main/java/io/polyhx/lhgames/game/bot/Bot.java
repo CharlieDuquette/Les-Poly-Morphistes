@@ -9,6 +9,7 @@ import io.polyhx.lhgames.game.point.Point;
 import java.util.List;
 
 public class Bot extends BaseBot {
+	// BOT
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
         return createMoveAction(Point.RIGHT);
     }
