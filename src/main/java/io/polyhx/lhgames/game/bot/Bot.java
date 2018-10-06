@@ -15,25 +15,25 @@ import java.util.List;
 
 public class Bot extends BaseBot {
 
-    public  static ArrayList<Tile> path = new ArrayList<>();
+//    public  static ArrayList<Tile> path = new ArrayList<>();
 
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
 //        GoTo.mapPrint(map);
 
 
-        if (!path.isEmpty()) {
-            System.out.println("Path isnt enpty!" + " : " + path);
-//            IAction action = new MoveAction(GoTo.getNextMovePathFinding(player, map, path));
-            IAction action = new MoveAction(path.get(0));
-            path.remove(0);
-            return  action;
-        }
-        else {
+//        if (!path.isEmpty()) {
+//            System.out.println("Path isnt enpty!" + " : " + path);
+//            IAction action = new  MoveAction(GoTo.getNextMovePathFinding(player, map, path));
+//            IAction action = new MoveAction(path.get(0));
+//            path.remove(0);
+//            return  action;
+//        }
+//        else {
             IAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
 
             System.out.println(action.getActionType() + " : " + action.getJSONContent());
             return action;
-        }
+//        }
     }
 
     public static boolean IsFull(Player player) {
