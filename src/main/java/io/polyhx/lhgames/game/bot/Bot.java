@@ -21,7 +21,8 @@ public class Bot extends BaseBot {
 
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
 //        GoTo.mapPrint(map);
-
+        return new MoveAction(new Point(0, 1));
+/*
 
 
         if (path.isEmpty()) {
@@ -36,7 +37,7 @@ public class Bot extends BaseBot {
             IAction action = new MoveAction(path.get(0));
             path.remove(0);
             return action;
-        }
+        }*/
     }
 
     public static boolean IsFull(Player player) {
