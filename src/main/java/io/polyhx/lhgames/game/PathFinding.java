@@ -1,65 +1,21 @@
 package io.polyhx.lhgames.game;
 
-import io.polyhx.lhgames.game.point.Point;
+import io.polyhx.lhgames.game.tile.Tile;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class PathFinding
 {
-	private Point           person;
-	private ArrayList<Point> openSet;
 
-	//public PathFinding(Case[][] map, ArrayList<Tile> coffres, Tile person, Tile sortie) {
-	//	this.person = person;
-	//	this.coffres = new ArrayList<>(coffres);
-	//	final Tile sortie1 = sortie;
-	//	this.map = map;
-	//}
-
-	//public ArrayList<Tile> bestPath() {
-	//	Tile start = person;
-
-		/*ArrayList<Tile>
-				coffresOrdonnes = new ArrayList<>(),
-				inaccessible = new ArrayList<>();
-
-		for (final Tile coffre : coffres) {
-			coffre.setSize(aStar(coffre, start).size());
-			if (coffre.getSize() > 0)
-				coffresOrdonnes.add(coffre);
-			else
-				inaccessible.add(coffre);
-		}
-
-    // A*
-    private int gScore, fScore;
-    private Point parent;
-
-		coffresOrdonnes.sort((tile, t1) -> Integer.compareUnsigned(tile.getSize(), t1.getSize()));
-
-		ArrayList<Tile> pathComplet = aStar(start, coffresOrdonnes.get(0));
-
-		int n;
-		for (n = 1; n < coffresOrdonnes.size(); n++)
-			pathComplet.addAll(aStar(coffresOrdonnes.get(n - 1), coffresOrdonnes.get(n)));
-
-		pathComplet.addAll(aStar(coffresOrdonnes.get(n - 1), sortie));*/
-		//ArrayList<Tile> pathComplet = aStar(start, coffres.get(0));
-
-		//pathComplet.addAll(aStar(coffres.get(0), coffres.get(1)));
-		//pathComplet.addAll(aStar(coffres.get(1), coffres.get(2)));
-
-		//return pathComplet;
-	//}
-
-	private ArrayList<Point> aStar(Point begin, Point end, Map map) {
+	public static ArrayList<Tile> aStar(Tile begin, Tile end, Map map) {
 		int tentativeGScore;
-/*
-		final ArrayList<Point> closedSet = new ArrayList<>();
-		openSet = new ArrayList<>();
-		final Point start = map[begin.getY()][begin.getX()];
+
+		final ArrayList<ExtendedPoint>
+				openSet = new ArrayList<>(),
+				closedSet = new ArrayList<>();
+
+		final ExtendedPoint start = new ExtendedPoint(begin);
 		openSet.add(start);
 		// the cost of going ....
 		start.setGScore(0);
@@ -67,32 +23,31 @@ public class PathFinding
 		// for the first node
 		// TODO Remove `start.` and case.calculerDistance OU Retirer le premier paramètre
 		// Calculer la distance entre le nœud de départ et le nœud d’arrivée
-		start.setFScore(start.calculerDistance(end));
+		start.setFScore(start.hypot(end.getPosition()));
 
 		//Case current;
 		while (!openSet.isEmpty()) {
 
-			Point current = new Point(0, 0);
+			ExtendedPoint current = null;
 			int minScore = Integer.MAX_VALUE;
-			for (final Point c : openSet)
+			for (final ExtendedPoint c : openSet)
 				if (c.getFScore() < minScore)
 					minScore = (current = c).getFScore();
 
-			//if (current.getX() == end.getX() && current.getY() == end.getY()) {
-			if (current.equals(end))
-				return reconstructPath(current, start);
+			if (current.is(end))
+				return reconstructPath(current);
 
 			openSet.remove(current);
 			closedSet.add(current);
 
-			for (final Point neighbour : current.neighbours) {
+			if (current.getNeighbours() == null)
+				current.setNeighbours(map);
+
+			for (final ExtendedPoint neighbour : current.getNeighbours()) {
 				if (closedSet.contains(neighbour))
 					continue;
 
-				//if (openSet.indexOf(n) < 0) {
-				//	openSet.add(n);
 				tentativeGScore = current.getGScore() + 1;
-				//}
 
 				// TODO Reconsider
 				if (!openSet.contains(neighbour))
@@ -100,55 +55,24 @@ public class PathFinding
 				else if (tentativeGScore >= neighbour.getGScore())
 					continue;
 
-				//if (tentativeGScore >= n.getGScore()) {
-				//	continue;
-				//}
-
-				// this path is the best record it
-
 				neighbour.setParent(current);
 				neighbour.setGScore(tentativeGScore);
-				neighbour.setFScore(tentativeGScore + neighbour.calculerDistance(end));
+				neighbour.setFScore(tentativeGScore + neighbour.hypot(end.getPosition()));
 			}
-		}*/
-		//Runner.reset();
+		}
+
+		// Aucun déplacement
 		return new ArrayList<>();
 	}
 
-	private ArrayList<Point> reconstructPath(Point current, Point start) {
-
-		/*ArrayList<Tile> moveInverse = new ArrayList<>();
-		Tile            moveTemp;
-
-		// current.position.getX() == start.position.getX()
-		//	&& current.position.getY() == start.position.getY()
-		while (current.calculerDistance(start.position) != 0 && current.parent != null) {
-
-			moveTemp = new Tile(current.position.getX() - current.parent.position.getX(),
-					current.position.getY() - current.parent.position.getY());
-
-			if (!(current.typePrincip == ' ' && current.typeSecond == 'x' && moveTemp.getY() == 1)) {
-				moveInverse.add(moveTemp);
-			} else {
-				moveInverse.add(moveTemp);
-			}
-
-			current = current.parent;
-
-			Collections.reverse(moveInverse);
-
-			moveInverse.forEach(tile -> System.out.println(tile.getX() + " " + tile.getY()));
-
-			// inverse la array
-			//ArrayList<Tile> temp = new ArrayList<>();
-			//for (int i = moveInverse.size() - 1; i >= 0; i--) {
-			//	temp.add(moveInverse.get(i));
-			//	System.out.println(moveInverse.get(i).getX() + "   " + moveInverse.get(i).getY());
-			//}
-		}
-		//Runner.reset();
-		return moveInverse;
-		*/
-		return new ArrayList<>();
+	private static ArrayList<Tile> reconstructPath(ExtendedPoint queue) {
+		final ArrayList<Tile> path = new ArrayList<>();
+		do {
+			path.add(queue.getTile());
+			queue = queue.getParent();
+		} while( queue != null);
+		// TODO Do no invert (start from end)
+		Collections.reverse(path);
+		return path;
 	}
 }
