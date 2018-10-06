@@ -17,6 +17,35 @@ import java.util.Random;
 
 public class GoTo {
 
+
+    private static ArrayList<Tile> runFirst(Tile start, Tile end, Map map) {
+        ArrayList<Tile> path = new ArrayList<>();
+        System.out.println("Start: x " + start.getX() + " y " + start.getY());
+        System.out.println("End  : x " + end.getX() + " y " + end.getY());
+        path = PathFinding.aStar(start, end, map);
+        System.out.println("YEE");
+        for (Tile t : path)
+            System.out.printf("(%d, %d) : %s\n", t.getX(), t.getY(), t.getContent());
+        // TODO Reconsider
+        path.remove(0);
+        return path;
+    }
+
+    private static Point getNextMovePathFinding(Player player, Map map, ArrayList<Tile> path) {
+
+        if (0 < path.size()) {
+            Tile tile = path.get(0);
+            Point p = new Point(tile.getX() - player.getPosition().getX(), tile.getY() - player.getPosition().getY());
+            System.out.println(" " + p.getX() + " " + p.getY());
+            return p;
+        }
+        path = null;
+//        i = 0;
+
+        return new Point();
+
+    }
+
     public static ResourceTile getClosestResource(Map map, Point playerPos, ArrayList<Point> positionsToIgnore) {
         List<ResourceTile> resources = map.getResources();
         double distance = -1;
@@ -118,6 +147,7 @@ public class GoTo {
     }
 
     public static IAction decisionMove(Map map, Player player, List<Player> others, GameInfo info, ArrayList<Point> pointsToIgnore, Point destination) {
+
         VectorPoint move = GoTo.goTo(player.getPosition(), destination);
 
 
@@ -130,8 +160,14 @@ public class GoTo {
         }
 
         else if (futureTile.isResource()) {
+            System.out.println("@@ UNSTuCK ");
 
-            return new MoveAction(goArround(map, player, move));
+            ArrayList<Tile> path = runFirst(map.getTile(player.getPosition()), map.getTile(destination), map);
+
+            return new MoveAction(getNextMovePathFinding(player, map, path));
+
+
+            //return new MoveAction(goArround(map, player, move));
         }
         else if (futureTile.isPlayer()) {
             return new MeleeAttackAction(move);
