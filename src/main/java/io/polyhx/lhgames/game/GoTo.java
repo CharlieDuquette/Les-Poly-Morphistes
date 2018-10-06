@@ -143,7 +143,7 @@ public class GoTo {
 //                return decision(map, player, others, info, pointsToIgnore);
         }
 
-        else if (futureTile.isHouse()) {
+        else if (futureTile.isHouse() && !VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
             goArround(map, player, destination);
             return new MoveAction(new Point());
 
