@@ -16,15 +16,11 @@ public class Bot extends BaseBot {
 
 
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
+        GoTo.mapPrint(map);
 
 
-        ResourceTile tile = GoTo.getClosestResource(map, player.getPosition());
-
-        Point move = GoTo.goTo(player.getPosition(), tile.getPosition());
-
-        System.out.println("Tile: " + VectorPoint.toString(tile.getPosition()) + " player: " + VectorPoint.toString(player.getPosition()) + " : " + VectorPoint.toString(move));
 
 
-        return createMoveAction(move);
+        return createMoveAction(GoTo.decision(map, player, others, info));
     }
 }
