@@ -1,5 +1,4 @@
 package io.polyhx.lhgames.game.bot;
-
 import io.polyhx.lhgames.game.GameInfo;
 import io.polyhx.lhgames.game.GoTo;
 import io.polyhx.lhgames.game.Map;
@@ -48,7 +47,7 @@ public class Bot extends BaseBot {
         }
 
         else {
-            System.out.println("\nDon't drink");
+            System.out.println("\nDon't drink potion" );
             return null;
         }
     }
