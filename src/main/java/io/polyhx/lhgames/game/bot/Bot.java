@@ -17,10 +17,14 @@ public class Bot extends BaseBot {
 
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
 
-        return createCollectAction(Point.RIGHT);
+
+        ResourceTile tile = GoTo.getClosestResource(map, player.getPosition());
+
+        Point move = GoTo.goTo(player.getPosition(), tile.getPosition());
+
+        System.out.println("Tile: " + VectorPoint.toString(tile.getPosition()) + " player: " + VectorPoint.toString(player.getPosition()) + " : " + VectorPoint.toString(move));
+
+
+        return createMoveAction(move);
     }
 }
-
-
-
-
