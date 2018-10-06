@@ -32,6 +32,7 @@ public class Bot extends BaseBot {
         return action;
         }
         else{
+            System.out.println(path + " ###@@@");
             IAction action = new MoveAction(path.get(0));
             path.remove(0);
             return action;

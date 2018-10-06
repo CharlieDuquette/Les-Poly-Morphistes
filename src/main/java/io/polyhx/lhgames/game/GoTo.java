@@ -11,6 +11,7 @@ import io.polyhx.lhgames.game.tile.Tile;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GoTo {
 
@@ -48,17 +49,29 @@ public class GoTo {
         return vectorPoint.toDirection();
     }
 
-    public static void goAround(){
+    public static void goAround(Point move) {
         System.out.println("###UNSTUCKING@@@");
-        Bot.path.add(new Point(1, 0));
-        Bot.path.add(new Point(1, 0));
+        Random rand = new Random();
 
-        Bot.path.add(new Point(0, 1));
-        Bot.path.add(new Point(0, 1));
+        for (int i = 0; i < 5; i++) {
 
-        Bot.path.add(new Point(-1, 0));
-        Bot.path.add(new Point(-1, 0));
+            int n = rand.nextInt(3) + 0;
+            switch (n) {
+                case 0:
+                    Bot.path.add(new Point(1, 0));
 
+                    break;
+                case 1:
+                    Bot.path.add(new Point(-1, 0));
+                    break;
+                case 2:
+                    Bot.path.add(new Point(0, -1));
+                    break;
+                case 3:
+                    Bot.path.add(new Point(0, 1));
+                    break;
+            }
+        }
     }
 
     public static AbstractPointAction decisionMove(Map map, Player player, List<Player> others, GameInfo info, ArrayList<Point> pointsToIgnore, Point destination) {
@@ -73,23 +86,21 @@ public class GoTo {
 //                return decision(map, player, others, info, pointsToIgnore);
         }
         else if (futureTile.isShop()) {
-            goAround();
+            goAround(move);
         }
         else if (futureTile.isHouse() && !VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
-            goAround();
+            goAround(move);
         }
 
         else if (futureTile.isResource()) {
 
-            goAround();
-            pointsToIgnore.add(futureTile.getPosition());
-            return decisionMove(map, player, others, info, pointsToIgnore, destination);
+            goAround(move);
         }
         else if (futureTile.isPlayer()) {
             return new MeleeAttackAction(move);
         }
         else if (futureTile.isLava()) {
-            goAround();
+            goAround(move);
             pointsToIgnore.add(futureTile.getPosition());
             return decision(map, player, others, info, pointsToIgnore);
         }
@@ -121,7 +132,7 @@ public class GoTo {
 
             Tile futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
 
-              if (futureTile.isResource()) {
+            if (futureTile.isResource()) {
                 ResourceTile tile12 = null;
                 for (ResourceTile resourceTile : map.getResources()) {
                     if (VectorPoint.equals(resourceTile.getPosition(), futureTile.getPosition())) {
@@ -134,11 +145,11 @@ public class GoTo {
                 }
                 return new CollectAction(move);
             }
-            else{
-                  return decisionMove(map, player, others, info, pointsToIgnore, tile.getPosition());
-              }
+            else {
+                return decisionMove(map, player, others, info, pointsToIgnore, tile.getPosition());
+            }
         }
-        else{
+        else {
             System.err.println("Going HOME");
             return decisionMove(map, player, others, info, pointsToIgnore, player.getHousePosition());
         }
