@@ -39,6 +39,11 @@ public class GoTo {
         }
 
 
+        Tile shop = getClosestShit(map, playerPos, positionsToIgnore, TileContent.SHOP);
+        if (shop != null) {
+
+            System.out.println("@@@### + " + shop.toString() + " : " + shop.toJSON());
+        }
         return tile;
 
     }
@@ -90,17 +95,9 @@ public class GoTo {
 
 
     public static IAction goArround(Map map, Player player, Point destination) {
-
-
         System.out.println("@@ UNSTuCK ");
-
-
+        goTo(player.getPosition(), destination);
         return new MoveAction(goTo2(player.getPosition(), destination));
-
-//        Bot.path = runFirst(map.getTile(player.getPosition()), map.getTile(destination), map, destination);
-//        System.out.println(Bot.path);
-//        return getNextMovePathFinding(player, map, path);
-
     }
 
 

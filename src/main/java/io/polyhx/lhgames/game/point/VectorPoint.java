@@ -58,11 +58,11 @@ public class VectorPoint extends Point {
         if (getY() != 0) {
             y = Math.abs(getY()) / getY();
         }
-        if (Math.abs(getX()) < Math.abs(getY())) {
-            y = 0;
+        if (Math.abs(getX()) > Math.abs(getY())) {
+            x = 0;
         }
         else {
-            x = 0;
+            y = 0;
         }
         return new VectorPoint(x, y);
     }
