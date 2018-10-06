@@ -33,4 +33,5 @@ public class Bot extends BaseBot {
         else
             return false;
     }
-}
+
+    }
