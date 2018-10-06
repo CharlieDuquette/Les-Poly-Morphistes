@@ -22,6 +22,8 @@ public class Bot extends BaseBot {
 
 
         IAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
+        drinkPotion(player);
+
 
         //System.out.println(action.getActionType() + " : "  + action.getJSONContent());
 
@@ -29,17 +31,25 @@ public class Bot extends BaseBot {
     }
 
     public static boolean IsFull(Player player) {
-        if (player.getCarriedResource() >= player.getResourceCapacity())
-            return true;
-        else
-            return false;
+        return player.getCarriedResource() >= player.getResourceCapacity();
     }
 
-    public static boolean drinkPotion(Player player) {
-        int
+    public IAction drinkPotion(Player player) {
+        int maxHealth = player.getMaximumHealth();
+        int currentHealth = player.getCurrentHealth();
+        int damageTaken = 0;
 
+        if(currentHealth < maxHealth)
+            damageTaken = maxHealth - currentHealth;
+
+        if(damageTaken >= currentHealth) {
+            System.out.println("\nDrink potion");
+            return createHealAction();
+        }
+
+        else {
+            System.out.println("\nDon't drink");
+            return null;
+        }
     }
-
-
-
-    }
+}
