@@ -124,7 +124,7 @@ public class GoTo {
 
 
     public static void mapPrint(Map map) {
-
+//test
         int sizeX = 50, sizeY = 70;
         char[][] mapo = new char[sizeX][sizeY];
 
