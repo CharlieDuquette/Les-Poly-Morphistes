@@ -13,6 +13,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GoTo {
 
@@ -88,24 +89,35 @@ public class GoTo {
 
 
     public static VectorPoint goArround(Map map, Player player) {
+
+
+        Random rand = new Random();
+
+
         VectorPoint move = new VectorPoint(1, 0);
         Tile futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
-        if (!futureTile.isResource()) {
-            return move;
-        }
-        move = new VectorPoint(-1, 0);
+        while (futureTile.isResource()) {
+            int  n = rand.nextInt(3) + 0;
 
-        futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
-        if (!futureTile.isResource()) {
-            return move;
-        }
-        move = new VectorPoint(0, 1);
+            switch (n) {
+                case 0:
+                    move = new VectorPoint(-1, 0);
+                    break;
+                case 1:
+                    move = new VectorPoint(1, 0);
+                    break;
+                case 2:
+                    move = new VectorPoint(0, 1);
+                    break;
+                case 3:
+                    move = new VectorPoint(0, -1);
+                    break;
+            }
+            futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
 
-        futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
-        if (!futureTile.isResource()) {
-            return move;
         }
-        move = new VectorPoint(0, -1);
+
+
 
         return move;
     }
@@ -115,6 +127,7 @@ public class GoTo {
 
 
         Tile futureTile = map.getTile(VectorPoint.add(player.getPosition(), move));
+        System.out.println(move + " ASDFA SDF");
 
         if (futureTile.isWall()) {
             System.err.println("@@@ATTACKING WALL");
@@ -158,7 +171,8 @@ public class GoTo {
             destinationContent = TileContent.SHOP;
             if (tile == null) {
                 System.out.println("@@@Looking for shop");
-                decisionMove(map, player, others, info, pointsToIgnore, new Point());
+                return decisionMove(map, player, others, info, pointsToIgnore, new Point(0, 0));
+
             }
 
         }
@@ -171,7 +185,7 @@ public class GoTo {
         System.out.println("Destination: " + destinationContent);
 
         if (Bot.IsFull(player)) {
-            System.err.println("@@@GOING TO HOME");
+            System.err.println("@@@GOING TO HOME BECAUSE FULL");
 
             return decisionMove(map, player, others, info, pointsToIgnore, player.getHousePosition());
         }
@@ -206,7 +220,7 @@ public class GoTo {
         }
         else {
 
-            System.err.println("@@@Going HOME");
+            System.err.println("@@@Going HOME because tile null");
             return decisionMove(map, player, others, info, pointsToIgnore, player.getHousePosition());
         }
 
