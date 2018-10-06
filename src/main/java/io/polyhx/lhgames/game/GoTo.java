@@ -77,7 +77,7 @@ public class GoTo {
         else if (futureTile.isShop()) {
             goAround();
         }
-        else if (futureTile.isHouse() && VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
+        else if (futureTile.isHouse() && !VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
             goAround();
         }
 
