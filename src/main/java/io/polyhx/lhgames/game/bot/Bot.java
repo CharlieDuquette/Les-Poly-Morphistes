@@ -9,6 +9,7 @@ import io.polyhx.lhgames.game.point.Point;
 import io.polyhx.lhgames.game.point.VectorPoint;
 import io.polyhx.lhgames.game.tile.ResourceTile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +22,7 @@ public class Bot extends BaseBot {
 
 
 
-        return createMoveAction(GoTo.decision(map, player, others, info));
+
+        return createMoveAction(GoTo.decision(map, player, others, info, new ArrayList<>()));
     }
 }

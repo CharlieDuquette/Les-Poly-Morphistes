@@ -22,6 +22,9 @@ public class VectorPoint extends Point {
         return vector;
     }
 
+    public static Point add(IPoint a, IPoint b) {
+        return new Point(a.getX() + b.getX(), a.getY() + b.getY());
+    }
 
     public VectorPoint scale(int scalar){
         VectorPoint vectorPoint = new VectorPoint(getX() * scalar, getY() * scalar);
@@ -67,5 +70,13 @@ public class VectorPoint extends Point {
     @Override
     public String toString() {
         return toString(this);
+    }
+
+    public static boolean equals(Point a, Point b) {
+        return a.getX() == b.getX() && a.getY() == b.getY();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        return equals(this, (Point) obj);
     }
 }
