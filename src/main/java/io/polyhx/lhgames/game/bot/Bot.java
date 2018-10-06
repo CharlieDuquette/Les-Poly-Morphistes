@@ -21,7 +21,7 @@ public class Bot extends BaseBot {
 //        GoTo.mapPrint(map);
 
 
-        AbstractPointAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
+        IAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
 
         System.out.println(action.getActionType() + " : "  + action.getJSONContent());
         return action;
