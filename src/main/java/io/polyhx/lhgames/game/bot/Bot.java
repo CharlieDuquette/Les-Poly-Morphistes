@@ -23,7 +23,8 @@ public class Bot extends BaseBot {
 
         AbstractPointAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
 
-        System.out.println(action.getActionType() + " : "  + action.getJSONContent());
+        //System.out.println(action.getActionType() + " : "  + action.getJSONContent());
+
         return action;
     }
 
@@ -33,5 +34,12 @@ public class Bot extends BaseBot {
         else
             return false;
     }
+
+    public static boolean drinkPotion(Player player) {
+        int
+
+    }
+
+
 
     }
