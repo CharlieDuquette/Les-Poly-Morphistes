@@ -140,4 +140,15 @@ public class GoTo {
             System.out.println(" ");
         }
     }
+
+    public static String getInfoOnPlayer(Player player){
+        return "Nom du joueur : " + player.getName() + "\n" +
+                "position : ( " + player.getX() + "," + player.getX() + ") \n" +
+                "Place dans le sac : " + player.getResourceCapacity() + "\n" +
+                "Ressource dans le sac : " + player.getCarriedResource() + "\n" +
+                "Vitesse de collecte : " + player.getCollectingSpeed()+ "\n" +
+                "Capacite level : " + player.getCapacityLevel() + "\n" +
+                "Sante level : " + player.getHealthLevel() + "\n" +
+                "Sante actuelle : " + player.getCurrentHealth() + "\n" ;
+    }
 }

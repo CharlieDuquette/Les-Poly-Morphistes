@@ -20,11 +20,12 @@ public class Bot extends BaseBot {
     public IAction getAction(Map map, Player player, List<Player> others, GameInfo info) {
 //        GoTo.mapPrint(map);
 
-
         AbstractPointAction action = GoTo.decision(map, player, others, info, new ArrayList<>());
 
         System.out.println(action.getActionType() + " : "  + action.getJSONContent());
+        System.out.print(GoTo.getInfoOnPlayer(player));
         return action;
+
     }
 
     public static boolean IsFull(Player player) {
