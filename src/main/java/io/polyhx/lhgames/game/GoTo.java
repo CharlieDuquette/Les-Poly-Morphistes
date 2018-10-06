@@ -59,8 +59,6 @@ public class GoTo {
         Bot.path.add(new Point(-1, 0));
         Bot.path.add(new Point(-1, 0));
 
-        Bot.path.add(new Point(0, -1));
-        Bot.path.add(new Point(0, -1));
     }
 
     public static AbstractPointAction decisionMove(Map map, Player player, List<Player> others, GameInfo info, ArrayList<Point> pointsToIgnore, Point destination) {
