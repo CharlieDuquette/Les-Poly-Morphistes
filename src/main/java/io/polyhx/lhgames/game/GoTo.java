@@ -18,46 +18,13 @@ import java.util.Random;
 public class GoTo {
 
 
-
-    private static ArrayList<Tile> runFirst(Tile start, Tile end, Map map, Point position) {
-        ArrayList<Tile> path = new ArrayList<>();
-
-        if (end == null) {
-            end = new Tile(position, TileContent.EMPTY);
-        }
-        System.out.println("Start: x " + start.getX() + " y " + start.getY());
-        System.out.println("End  : x " + end.getX() + " y " + end.getY());
-        path = PathFinding.aStar(start, end, map);
-        System.out.println("YEE");
-        for (Tile t : path)
-            System.out.printf("(%d, %d) : %s\n", t.getX(), t.getY(), t.getContent());
-        // TODO Reconsider
-        path.remove(0);
-        return path;
-    }
-
-    public static Point getNextMovePathFinding(Player player, Map map, ArrayList<Tile> path) {
-
-        if (0 < path.size()) {
-            Tile tile = path.get(0);
-            Point p = new Point(tile.getX() - player.getPosition().getX(), tile.getY() - player.getPosition().getY());
-            System.out.println(" " + p.getX() + " " + p.getY());
-            return p;
-        }
-        path = new ArrayList<>();
-//        0 = 0;
-
-        return new Point();
-
-    }
-
     public static ResourceTile getClosestResource(Map map, Point playerPos, ArrayList<Point> positionsToIgnore) {
         List<ResourceTile> resources = map.getResources();
         double distance = -1;
         ResourceTile tile = null;
         for (ResourceTile resTile : resources) {
 
-            if ((resTile.getPosition().getDistanceTo(playerPos) < distance | distance == -1) && resTile.getResource() > 0 ) {
+            if ((resTile.getPosition().getDistanceTo(playerPos) < distance | distance == -1) && resTile.getResource() > 0) {
                 boolean shouldIgnore = false;
                 for (Point point : positionsToIgnore) {
                     if (VectorPoint.equals(point, resTile.getPosition())) {
@@ -116,12 +83,19 @@ public class GoTo {
         return vectorPoint.toDirection();
     }
 
+    public static VectorPoint goTo2(Point playerPos, Point destination) {
+        VectorPoint vectorPoint = new VectorPoint(destination).substract(playerPos);
+        return vectorPoint.toDirection2();
+    }
 
-    public static void goArround(Map map, Player player, Point destination) {
 
+    public static IAction goArround(Map map, Player player, Point destination) {
 
 
         System.out.println("@@ UNSTuCK ");
+
+
+        return new MoveAction(goTo2(player.getPosition(), destination));
 
 //        Bot.path = runFirst(map.getTile(player.getPosition()), map.getTile(destination), map, destination);
 //        System.out.println(Bot.path);
@@ -144,13 +118,11 @@ public class GoTo {
         }
 
         else if (futureTile.isHouse() && !VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
-            goArround(map, player, destination);
-            return new MoveAction(new Point());
+            return goArround(map, player, destination);
 
         }
         else if (futureTile.isResource()) {
-            goArround(map, player, destination);
-            return new MoveAction(new Point());
+            return goArround(map, player, destination);
 
 
             //return new MoveAction(goArround(map, player, move));
@@ -228,7 +200,7 @@ public class GoTo {
                 Item itemToBuy = getNextItemToBuy(player);
                 System.out.println("@@@BUYING : " + itemToBuy);
 
-                    return new PurchaseAction(itemToBuy);
+                return new PurchaseAction(itemToBuy);
 
             }
             else {
@@ -283,15 +255,15 @@ public class GoTo {
         }
     }
 
-    public static String getInfoOnPlayer(Player player){
+    public static String getInfoOnPlayer(Player player) {
         return "Nom du joueur : " + player.getName() + "\n" +
                 "position : ( " + player.getX() + "," + player.getX() + ") \n" +
                 "Place dans le sac : " + player.getResourceCapacity() + "\n" +
                 "Ressource dans le sac : " + player.getCarriedResource() + "\n" +
                 "Total rour" + player.getTotalResource() + "\n" +
-                "Vitesse de collecte : " + player.getCollectingSpeed()+ "\n" +
+                "Vitesse de collecte : " + player.getCollectingSpeed() + "\n" +
                 "Capacite level : " + player.getCapacityLevel() + "\n" +
                 "Sante level : " + player.getHealthLevel() + "\n" +
-                "Sante actuelle : " + player.getCurrentHealth() + "\n" ;
+                "Sante actuelle : " + player.getCurrentHealth() + "\n";
     }
 }

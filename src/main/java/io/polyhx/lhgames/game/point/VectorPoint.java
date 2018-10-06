@@ -49,6 +49,23 @@ public class VectorPoint extends Point {
         return new VectorPoint(x, y);
     }
 
+    public VectorPoint toDirection2(){
+        int x = 0, y = 0;
+
+        if (getX() != 0) {
+            x = Math.abs(getX()) / getX();
+        }
+        if (getY() != 0) {
+            y = Math.abs(getY()) / getY();
+        }
+        if (Math.abs(getX()) < Math.abs(getY())) {
+            y = 0;
+        }
+        else {
+            x = 0;
+        }
+        return new VectorPoint(x, y);
+    }
     public VectorPoint normalize(){
         VectorPoint vectorPoint = new VectorPoint(getX(), getY());
 

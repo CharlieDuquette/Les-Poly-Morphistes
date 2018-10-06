@@ -23,7 +23,8 @@ public class Bot extends BaseBot {
 
         if (!path.isEmpty()) {
             System.out.println("Path isnt enpty!" + " : " + path);
-            IAction action = new MoveAction(GoTo.getNextMovePathFinding(player, map, path));
+//            IAction action = new MoveAction(GoTo.getNextMovePathFinding(player, map, path));
+            IAction action = new MoveAction(path.get(0));
             path.remove(0);
             return  action;
         }
