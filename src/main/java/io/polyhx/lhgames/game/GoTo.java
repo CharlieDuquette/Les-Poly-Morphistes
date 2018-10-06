@@ -121,6 +121,10 @@ public class GoTo {
             return goArround(map, player, destination);
 
         }
+        else if (futureTile.isShop()) {
+            return goArround(map, player, destination);
+
+        }
         else if (futureTile.isResource()) {
             return goArround(map, player, destination);
 
@@ -152,7 +156,7 @@ public class GoTo {
         System.out.println(getInfoOnPlayer(player));
 
         TileContent destinationContent = null;
-        if (player.getTotalResource() > 30000 && getNextItemToBuy(player) != null && !Bot.IsFull(player)) {
+        if (player.getTotalResource() > 100000 && getNextItemToBuy(player) != null && !Bot.IsFull(player)) {
 
             System.out.println("@@@GOINGTOSHOP");
 
