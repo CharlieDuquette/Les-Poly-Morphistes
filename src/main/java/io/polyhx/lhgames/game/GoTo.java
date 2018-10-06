@@ -48,6 +48,20 @@ public class GoTo {
         return vectorPoint.toDirection();
     }
 
+    public static void goAround(){
+        System.out.println("###UNSTUCKING@@@");
+        Bot.path.add(new Point(1, 0));
+        Bot.path.add(new Point(1, 0));
+
+        Bot.path.add(new Point(0, 1));
+        Bot.path.add(new Point(0, 1));
+
+        Bot.path.add(new Point(-1, 0));
+        Bot.path.add(new Point(-1, 0));
+
+        Bot.path.add(new Point(0, -1));
+        Bot.path.add(new Point(0, -1));
+    }
 
     public static AbstractPointAction decisionMove(Map map, Player player, List<Player> others, GameInfo info, ArrayList<Point> pointsToIgnore, Point destination) {
         VectorPoint move = GoTo.goTo(player.getPosition(), destination);
@@ -60,8 +74,16 @@ public class GoTo {
             return new MeleeAttackAction(move);
 //                return decision(map, player, others, info, pointsToIgnore);
         }
+        else if (futureTile.isShop()) {
+            goAround();
+        }
+        else if (futureTile.isHouse() && VectorPoint.equals(futureTile.getPosition(), player.getHousePosition())) {
+            goAround();
+        }
 
         else if (futureTile.isResource()) {
+
+            goAround();
             pointsToIgnore.add(futureTile.getPosition());
             return decisionMove(map, player, others, info, pointsToIgnore, destination);
         }
@@ -69,6 +91,7 @@ public class GoTo {
             return new MeleeAttackAction(move);
         }
         else if (futureTile.isLava()) {
+            goAround();
             pointsToIgnore.add(futureTile.getPosition());
             return decision(map, player, others, info, pointsToIgnore);
         }
@@ -77,6 +100,8 @@ public class GoTo {
             return new MoveAction(move);
 
         }
+        System.out.println("EMPTYUMOVE@@");
+        return new MoveAction(new Point());
     }
 
 
